@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecedbf948ec6e5642b602bf5f15de2a9, type: 3}
+  m_Name: SingletonProfile
+  m_EditorClassIdentifier: 
+  _bootInfo:
+  - _prefab: {fileID: 4369099551974970133, guid: ffcbe98dcd1bdf849b04198aed5a1f44,
+      type: 3}
+    _singletonType:
+      _assemblyQualifiedName: EventManager, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    _bootScenePath: 
+    _bootMode: 1

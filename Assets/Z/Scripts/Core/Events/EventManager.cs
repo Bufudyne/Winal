@@ -49,6 +49,8 @@ public sealed class On : SmartEnum<On>
 {
     public static On StartGame { get; } = new("StartGame", 0);
     public static On UpdateTileAnimation { get; } = new("UpdateTileAnimation", 1);
+    public static On SpawnedPoint { get; } = new("SpawnedPoint", 2);
+    public static On DeSpawnedPoint { get; } = new("DeSpawnedPoint", 3);
     public static On LoadStage { get; } = new("LoadGame", 99);
 
     private object _message;

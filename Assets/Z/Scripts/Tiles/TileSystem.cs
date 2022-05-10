@@ -32,7 +32,10 @@ public class TileSystem : MonoBehaviour
     private IEnumerator CreateRandomPoints()
     {
         randomWait = new WaitForSeconds(Random.Range(2f, 5f));
-        _tiles[Random.Range(0,9), Random.Range(0,9)].ChangeType(TileType.IsPoint);
+        var h = Random.Range(0, 9);
+        var v = Random.Range(0, 9);
+        _tiles[h, v].ChangeType(TileType.IsPoint);
+        EventManager.TriggerEvent(On.SpawnedPoint,_tiles[h, v].transform.position);
         yield return randomWait;
         StartCoroutine(CreateRandomPoints());
     }

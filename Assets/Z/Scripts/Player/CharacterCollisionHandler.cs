@@ -34,7 +34,6 @@ public class CharacterCollisionHandler : MonoBehaviour
 
     private void Update()
     {
-        if (_tiles.Count <= 0) return;
         for (var i = 0; i < _tiles.Count; i++)
         {
             if (_tiles[i].IsPoint())

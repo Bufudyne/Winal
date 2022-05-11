@@ -238,7 +238,7 @@ public class CharacterGameController : MonoBehaviour, ICharacterController
             }
             case CharacterState.Intro:
                 // Gravity
-                currentVelocity += gravity * deltaTime;
+                currentVelocity = gravity * deltaTime;
 
                 // Drag
                 currentVelocity *= 1f / (1f + drag * deltaTime);

@@ -56,6 +56,22 @@ public class CharacterGameController : MonoBehaviour, ICharacterController
         // Assign the characterController to the motor
         motor.CharacterController = this;
     }
+    
+    
+    private void OnEnable()
+    {
+        EventManager.StartListening(On.TookDamage, OnTookDamage);
+    }
+
+    private void OnTookDamage()
+    {
+        CurrentCharacterState = CharacterState.Intro;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(On.TookDamage, OnTookDamage);
+    }
 
     /// <summary>
     ///     (Called by KinematicCharacterMotor during its update cycle)

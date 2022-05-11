@@ -38,8 +38,15 @@ public class CharacterCollisionHandler : MonoBehaviour
         {
             if (_tiles[i].IsPoint())
             {
+                EventManager.TriggerEvent(On.PointObtained, null);
                 _tiles[i].ChangeType(TileType.IsPointCollected);
+            }
+
+            if (_tiles[i].IsDamage())
+            {
+                EventManager.TriggerEvent(On.TookDamage, null);
             }
         }
     }
+
 }

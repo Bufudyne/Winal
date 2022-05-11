@@ -181,6 +181,7 @@ namespace Zio
         {
             DOVirtual.Float(_colorIntensity, 1.8f, 0.6f, SetColor).SetLoops(3).SetEase(Ease.InOutFlash);
             yield return _pointVanishingTime;
+            EventManager.TriggerEvent(On.PointTimedOut,null);
             Reset();
         }
 

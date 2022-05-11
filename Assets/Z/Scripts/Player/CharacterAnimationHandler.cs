@@ -12,6 +12,22 @@ public class CharacterAnimationHandler : MonoBehaviour
     [SerializeField] private CharacterGameController _character;
     private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
     private static readonly int MoveSpeed = Animator.StringToHash("moveSpeed");
+    private static readonly int IsDead = Animator.StringToHash("isDead");
+
+    private void OnEnable()
+    {
+        EventManager.StartListening(On.TookDamage, OnTookDamage);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(On.TookDamage, OnTookDamage);
+    }
+
+    private void OnTookDamage()
+    {
+        _animator.SetBool(IsDead, true);
+    }
 
     private void Update()
     {

@@ -8,6 +8,8 @@ public class EventManager : SingletonBehaviour<EventManager>
     private static EventManager _eventManager;
     private Dictionary<int, Action> _eventDictionary;
 
+   
+
     protected override void Awake()
     {
         _eventDictionary ??= new Dictionary<int, Action>();
@@ -50,7 +52,11 @@ public sealed class On : SmartEnum<On>
     public static On StartGame { get; } = new("StartGame", 0);
     public static On UpdateTileAnimation { get; } = new("UpdateTileAnimation", 1);
     public static On SpawnedPoint { get; } = new("SpawnedPoint", 2);
-    public static On DeSpawnedPoint { get; } = new("DeSpawnedPoint", 3);
+    public static On PointObtained { get; } = new("PointObtained", 3);
+    public static On PointTimedOut { get; } = new("PointTimedOut", 4);
+    public static On DeSpawnedPoint { get; } = new("DeSpawnedPoint", 5);
+    public static On TookDamage { get; } = new("TookDamage", 6);
+    
     public static On LoadStage { get; } = new("LoadGame", 99);
 
     private object _message;

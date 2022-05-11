@@ -18,7 +18,7 @@ public class Waypoint_Indicator : MonoBehaviour
 
     #region CANVAS - By default, be sure to tag your Canvas as "Canvas" for the script to see it
     //!! Make sure your Canvas > Reference Resolution is the same aspect ratio as your Play Screen or else Waypoint boundary edges may not align exactly
-    private Canvas mainCanvas;
+    public Canvas mainCanvas;
     private RectTransform mainCanvasRect;
     private GameObject[] mainCanvasObjs;
     private GameObject mainCanvasObj;
@@ -30,7 +30,7 @@ public class Waypoint_Indicator : MonoBehaviour
 
 
     #region CAMERA - By default, be sure to tag your Camera as "MainCamera" for the script to see it
-    private Camera mainCamera;
+    public Camera mainCamera;
     private GameObject[] mainCameraObjs; //This is temporarily used to see if more than one game object is taggd with this name
     private GameObject mainCameraObj;
     public string camera_tag_name = "MainCamera";
@@ -41,7 +41,7 @@ public class Waypoint_Indicator : MonoBehaviour
 
     #region DISTANCE CALCULATION
     private GameObject[] distCalTargets; //This is temporarily used to see if more than one game object is taggd with this name
-    private GameObject distCalTarget; //The GAME OBJECT this game object uses to calculate the distance from (defualt is camera)
+    public GameObject distCalTarget; //The GAME OBJECT this game object uses to calculate the distance from (defualt is camera)
     public string distCalTargetTag = "MainCamera"; //The GAME OBJECT TAG NAME this game object uses to calculate the distance from (defualt is camera)
     #endregion
 
@@ -553,8 +553,16 @@ public class Waypoint_Indicator : MonoBehaviour
 
     void Awake()
     {
-        CheckForCamera();
-        CheckForCanvas();
+        if (mainCamera is not null && mainCanvas is not null && distCalTarget is not null)
+        {
+            distanceTargetDefined = true;
+        }
+        else
+        {
+            CheckForCamera();
+            CheckForCanvas();
+        }
+            
 
 
         if (mainCamera && mainCanvas)
@@ -3367,6 +3375,7 @@ public class Waypoint_Indicator : MonoBehaviour
         #region Check for Distance Calculation Tag Duplicates or Empty Field
         if (!distanceTargetDefined)
         {
+            
             //Check to see if the Tag Name is blank
             if (distCalTargetTag == "" || distCalTargetTag == null || distCalTargetTag == " ")
             {

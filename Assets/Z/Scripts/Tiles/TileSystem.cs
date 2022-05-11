@@ -35,7 +35,7 @@ public class TileSystem : MonoBehaviour
         var h = Random.Range(0, 9);
         var v = Random.Range(0, 9);
         _tiles[h, v].ChangeType(TileType.IsPoint);
-        EventManager.TriggerEvent(On.SpawnedPoint,_tiles[h, v].transform.position);
+        EventManager.TriggerEvent(On.SpawnedPoint,_tiles[h, v].gameObject);
         yield return randomWait;
         StartCoroutine(CreateRandomPoints());
     }

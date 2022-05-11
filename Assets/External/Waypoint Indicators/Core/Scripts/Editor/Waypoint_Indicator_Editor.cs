@@ -49,6 +49,9 @@ public class Waypoint_Indicator_Editor : Editor
             //SerializedProperty canvastagnames = serializedObject.FindProperty("canvas_tag_name_array");
             //EditorGUILayout.PropertyField(canvastagnames, new GUIContent() { text = "Canvas Tag Names" }, true);
 
+            serializedObject.FindProperty("mainCanvas").objectReferenceValue = EditorGUILayout.ObjectField(new GUIContent("Canvas GO"), targetScript.mainCanvas, typeof(Canvas), true);
+            serializedObject.FindProperty("mainCamera").objectReferenceValue = EditorGUILayout.ObjectField(new GUIContent("Camera GO"), targetScript.mainCamera, typeof(Camera), true);
+            serializedObject.FindProperty("distCalTarget").objectReferenceValue = EditorGUILayout.ObjectField(new GUIContent("Target GO"), targetScript.distCalTarget, typeof(GameObject), true);
             serializedObject.FindProperty("canvas_tag_name").stringValue = EditorGUILayout.TextField("Canvas Tag Name", targetScript.canvas_tag_name);
 
             serializedObject.FindProperty("camera_tag_name").stringValue = EditorGUILayout.TextField("Camera Tag Name", targetScript.camera_tag_name);

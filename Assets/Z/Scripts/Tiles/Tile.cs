@@ -71,7 +71,7 @@ namespace Zio
             cubeData = CubeAnimationState.IsDefault;
             _tileType = TileType.IsDefault;
             _manualOverride = false;
-            EventManager.TriggerEvent(On.DeSpawnedPoint, transform.position);
+            EventManager.TriggerEvent(On.DeSpawnedPoint, gameObject);
             UpdateTile();
         }
 

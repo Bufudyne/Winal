@@ -13,6 +13,7 @@ public class TileSystem : MonoBehaviour
 
     private void Start()
     {
+        _tiles=new Tile[10, 10];
         int x = 0, y = 0;
         foreach (var tile in tileList)
         {

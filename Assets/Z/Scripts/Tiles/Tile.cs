@@ -1,12 +1,4 @@
-﻿//////////////////////////////////////////////////////
-// MK Glow Cube                      				//
-//					                                //
-// Created by Michael Kremmel                       //
-// www.michaelkremmel.de                            //
-// Copyright © 2017 All rights reserved.            //
-//////////////////////////////////////////////////////
-
-using System;
+﻿using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -38,7 +30,7 @@ namespace Zio
         public CubeAnimationState cubeData;
         private int _baseMap;
         private int _colorId;
-        private float _colorIntensity = 2.6f;
+        private float _colorIntensity = 2.5f;
 
         private Color _currentColor;
 
@@ -55,7 +47,7 @@ namespace Zio
         private TileType _tileType;
 
 
-        private void Awake()
+        private void Start()
         {
             _baseMap = Shader.PropertyToID("_BaseColor");
             _emissionColorId = Shader.PropertyToID("_EmissionColor");
@@ -179,7 +171,7 @@ namespace Zio
 
         private IEnumerator VanishPointAnimation()
         {
-            DOVirtual.Float(_colorIntensity, 1.8f, 0.6f, SetColor).SetLoops(3).SetEase(Ease.InOutFlash);
+            DOVirtual.Float(_colorIntensity, _colorIntensity/2f, 0.6f, SetColor).SetLoops(3).SetEase(Ease.InOutFlash);
             yield return _pointVanishingTime;
             EventManager.TriggerEvent(On.PointTimedOut,null);
             Reset();
@@ -187,7 +179,7 @@ namespace Zio
 
         private IEnumerator SpawnPointAnimation()
         {
-            DOVirtual.Float(2f, _colorIntensity, 0.4f, SetColor).SetEase(Ease.OutBounce);
+            DOVirtual.Float(_colorIntensity/2f ,_colorIntensity, 0.4f, SetColor).SetEase(Ease.OutBounce);
             yield return _pointTime;
             ChangeType(TileType.IsPointVanishing);
         }

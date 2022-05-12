@@ -5,6 +5,7 @@ using System.Text;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private GameObject _comboTextPanel;
     [SerializeField] private TextMeshProUGUI _comboTextValue;
+    
+    [SerializeField] private GameObject _buttonRetry;
 
     public int pointPerTile = 5;
     private int _scoreMultiplier = 0;
@@ -41,6 +44,7 @@ public class UIManager : MonoBehaviour
         EventManager.StartListening(On.LoadStage, OnLoadStage);
         EventManager.StartListening(On.PointObtained, OnPointObtained);
         EventManager.StartListening(On.PointTimedOut, OnPointTimedOut);
+        EventManager.StartListening(On.TookDamage, OnTookDamage);
     }
 
     private void OnDisable()
@@ -48,6 +52,21 @@ public class UIManager : MonoBehaviour
         EventManager.StopListening(On.LoadStage, OnLoadStage);
         EventManager.StopListening(On.PointObtained, OnPointObtained);
         EventManager.StopListening(On.PointTimedOut, OnPointTimedOut);
+        EventManager.StopListening(On.TookDamage, OnTookDamage);
+    }
+
+    private void OnTookDamage()
+    {
+        _buttonRetry.SetActive(true);
+    }
+
+    public void OnClickButtonRetry()
+    {
+        EventManager.Reset();
+        EventManager.Instance.aReset();
+        
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void OnPointTimedOut()

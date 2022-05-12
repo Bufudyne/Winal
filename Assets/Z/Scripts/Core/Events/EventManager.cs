@@ -15,6 +15,17 @@ public class EventManager : SingletonBehaviour<EventManager>
         _eventDictionary ??= new Dictionary<int, Action>();
     }
 
+    public static void Reset()
+    {
+        Instance._eventDictionary.Clear();
+        
+    }
+
+    public void aReset()
+    {
+        _eventDictionary.Clear();
+    }
+
     public static void StartListening(On onEvent, Action listener)
     {
         if (Instance._eventDictionary.TryGetValue(onEvent.Value, out var thisEvent))

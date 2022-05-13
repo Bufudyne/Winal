@@ -114,8 +114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _colors:
   - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0.25}
-  - {r: 0.078431375, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0, a: 0.25490198}
+  - {r: 0, g: 0, b: 1, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 1, g: 0.49411765, b: 1, a: 1}

@@ -20,6 +20,9 @@ public class CharacterInputController : MonoBehaviour
 
     private Player _player;
 
+    private Vector2 _touchInput;
+    private bool _jumpInput;
+
     private void Awake()
     {
         _player = ReInput.players.GetPlayer(0);
@@ -27,17 +30,28 @@ public class CharacterInputController : MonoBehaviour
     
     private void Update()
     {
-        HandleCharacterInput();
+        HandleKeyboardCharacterInput();
+        
+    }
+    public void OnTouchJoystick(Vector2 input)
+    {
+        _touchInput = input;
+    }
+
+    public void OnPressJump(bool value)
+    {
+        _jumpInput = value;
     }
     
-    private void HandleCharacterInput()
+    
+    private void HandleKeyboardCharacterInput()
     {
         CharacterInputs = new PlayerCharacterInputs
         {
             // Build the CharacterInputs struct
-            moveAxisVertical = _player.GetAxis(HorizontalInput),
-            moveAxisHorizontal = _player.GetAxis(VerticalInput),
-            shouldJump = _player.GetButton(JumpInput)
+            moveAxisVertical = _player.GetAxis(HorizontalInput) + -_touchInput.x,
+            moveAxisHorizontal = _player.GetAxis(VerticalInput)+ _touchInput.y,
+            shouldJump = _player.GetButton(JumpInput) || _jumpInput
         };
 
         // Apply inputs to character

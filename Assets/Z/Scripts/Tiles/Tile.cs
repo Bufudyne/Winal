@@ -25,7 +25,17 @@ namespace Zio
     public class Tile : MonoBehaviour
     {
         [SerializeField] private Color[] _colors =
-            {new(0f, 0f, 0f, 0.2f), Color.red, Color.green, Color.blue, new(1f, 0f, 0f, 0.5f)};
+            {   new(0f, 0f, 0f, 0),
+                new(255f, 0f, 0f, 65f),
+                new(0f, 0f, 255f, 65f),
+                new(0f, 255f, 0f, 65f),
+                new(0f, 0f, 255f, 255f),
+                new(255f, 126f, 255f, 255f),
+                new(0f, 0f, 255f, 65f),
+                new(0f, 0f, 255f, 65f),
+                new(0f, 0f, 255f, 65f),
+            };
+        
 
         public CubeAnimationState cubeData;
         private int _baseMap;
@@ -79,7 +89,7 @@ namespace Zio
         }
 
 
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             UpdateTile(true);
@@ -94,7 +104,7 @@ namespace Zio
             _renderer = GetComponent<Renderer>();
             UpdateTile(true);
         }
-
+#endif
         private void OnUpdateTileAnimation()
         {
             if (_manualOverride) return;

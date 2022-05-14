@@ -31,7 +31,7 @@ MonoBehaviour:
   active: 1
   showEditorMainBehavior:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 0
   showEditorBloomBehavior:
     m_OverrideState: 0
     m_Value: 1
@@ -238,3 +238,32 @@ MonoBehaviour:
   components:
   - {fileID: -4625637949267979723}
   - {fileID: -7785670509200738463}
+  - {fileID: 4403007952722527885}
+--- !u!114 &4403007952722527885
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: 
+  active: 1
+  postExposure:
+    m_OverrideState: 0
+    m_Value: 0
+  contrast:
+    m_OverrideState: 1
+    m_Value: 5
+  colorFilter:
+    m_OverrideState: 0
+    m_Value: {r: 0.7578583, g: 0.7578583, b: 0.7578583, a: 1}
+  hueShift:
+    m_OverrideState: 0
+    m_Value: 0
+  saturation:
+    m_OverrideState: 1
+    m_Value: 50

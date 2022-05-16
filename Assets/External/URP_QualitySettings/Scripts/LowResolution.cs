@@ -8,7 +8,7 @@ public class LowResolution : MonoBehaviour
 	public bool isFirstScene = true;
 
 
-	void Start ()
+	private void Start ()
 	{
 		#region Default Settings
 
@@ -34,27 +34,24 @@ public class LowResolution : MonoBehaviour
 
 		#region Apply Settings
 
-		if (isFirstScene)
+		if (!isFirstScene) return;
+		if (PlayerPrefs.GetInt("Resolution Quality") == 2)
 		{
-			if (PlayerPrefs.GetInt("Resolution Quality") == 2)
-			{
-				Screen.SetResolution((int)(PlayerPrefs.GetInt("OriginalX") * 0.5f),
-					(int)(PlayerPrefs.GetInt("OriginalY") * 0.5f), true);
-			}
-			if (PlayerPrefs.GetInt("Resolution Quality") == 1)
-			{
-				Screen.SetResolution((int)(PlayerPrefs.GetInt("OriginalX") * 0.7f),
-					(int)(PlayerPrefs.GetInt("OriginalY") * 0.7f), true);
-			}
-			if (PlayerPrefs.GetInt("Resolution Quality") == 0)
-			{
-				Screen.SetResolution((int)(PlayerPrefs.GetInt("OriginalX") * 1),
-					(int)(PlayerPrefs.GetInt("OriginalY") * 1), true);
-			}
-			
-			QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("Quality Level"), false);
-
+			Screen.SetResolution((int)(PlayerPrefs.GetInt("OriginalX") * 0.5f),
+				(int)(PlayerPrefs.GetInt("OriginalY") * 0.5f), true);
 		}
+		if (PlayerPrefs.GetInt("Resolution Quality") == 1)
+		{
+			Screen.SetResolution((int)(PlayerPrefs.GetInt("OriginalX") * 0.7f),
+				(int)(PlayerPrefs.GetInt("OriginalY") * 0.7f), true);
+		}
+		if (PlayerPrefs.GetInt("Resolution Quality") == 0)
+		{
+			Screen.SetResolution((int)(PlayerPrefs.GetInt("OriginalX") * 1),
+				(int)(PlayerPrefs.GetInt("OriginalY") * 1), true);
+		}
+			
+		QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("Quality Level"), false);
 
 		#endregion
 	}

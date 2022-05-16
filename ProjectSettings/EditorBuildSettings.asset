@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Erwin/MainMenu.unity
+    guid: 83c08cbc36469f04c961491699e42e9e
+  - enabled: 1
     path: Assets/Z/Default.unity
     guid: 68a0770a60d42184ea2ada5fb97211db
   m_configObjects: {}

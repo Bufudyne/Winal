@@ -35,7 +35,7 @@ namespace Zio
                 new(0f, 0f, 255f, 65f),
                 new(0f, 0f, 255f, 65f),
             };
-        
+
 
         public CubeAnimationState cubeData;
         private int _baseMap;

@@ -6,36 +6,40 @@ using DTT.Singletons;
 public class EventManager : SingletonBehaviour<EventManager>
 {
     private static EventManager _eventManager;
-    private Dictionary<int, Action> _eventDictionary;
-
-   
+    private Dictionary<int, Event> _eventDictionary;
+    
+    
+    private struct Event
+    {
+        public Action Action;
+        public bool Persistence;
+    }
 
     protected override void Awake()
     {
-        _eventDictionary ??= new Dictionary<int, Action>();
+        _eventDictionary ??= new Dictionary<int, Event>();
     }
 
-    public static void Reset()
+
+    public  void Reset()
     {
         Instance._eventDictionary.Clear();
-        
+        UIGlobalCanvas.Instance.Reset();
+        StageManager.Instance.OnEnable();
     }
 
-    public void aReset()
-    {
-        _eventDictionary.Clear();
-    }
-
-    public static void StartListening(On onEvent, Action listener)
+    public static void StartListening(On onEvent, Action listener, bool persistence =false)
     {
         if (Instance._eventDictionary.TryGetValue(onEvent.Value, out var thisEvent))
         {
-            thisEvent += listener;
+            thisEvent.Action += listener;
+            thisEvent.Persistence = persistence;
             Instance._eventDictionary[onEvent.Value] = thisEvent;
         }
         else
         {
-            thisEvent += listener;
+            thisEvent.Action += listener;
+            thisEvent.Persistence = persistence;
             Instance._eventDictionary.Add(onEvent.Value, thisEvent);
         }
     }
@@ -44,7 +48,7 @@ public class EventManager : SingletonBehaviour<EventManager>
     {
         if (_eventManager is null || Instance is null) return;
         if (!Instance._eventDictionary.TryGetValue(onEvent.Value, out var thisEvent)) return;
-        thisEvent -= listener;
+        thisEvent.Action -= listener;
         Instance._eventDictionary[onEvent.Value] = thisEvent;
     }
 
@@ -53,7 +57,7 @@ public class EventManager : SingletonBehaviour<EventManager>
         onEvent.SetMessage(message);
 
         if (Instance._eventDictionary.TryGetValue(onEvent.Value, out var thisEvent))
-            thisEvent.Invoke();
+            thisEvent.Action.Invoke();
     }
 }
 
@@ -67,6 +71,13 @@ public sealed class On : SmartEnum<On>
     public static On PointTimedOut { get; } = new("PointTimedOut", 4);
     public static On DeSpawnedPoint { get; } = new("DeSpawnedPoint", 5);
     public static On TookDamage { get; } = new("TookDamage", 6);
+    public static On StageComplete { get; } = new("StageComplete", 7);
+    public static On LoadScene { get; } = new("LoadScene", 8);
+    public static On ShowScreenTransition { get; } = new("ShowScreenTransition", 9);
+    public static On HideScreenTransition { get; } = new("HideScreenTransition", 10);
+    public static On LoadStageData { get; } = new("LoadStageData", 20);
+    public static On BeginStage { get; } = new("BeginStage", 21);
+    public static On TimerRanOut { get; } = new("TimerRanOut", 23);
     
     public static On LoadStage { get; } = new("LoadGame", 99);
 

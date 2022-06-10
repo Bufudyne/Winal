@@ -20,3 +20,17 @@ MonoBehaviour:
         PublicKeyToken=null
     _bootScenePath: 
     _bootMode: 1
+  - _prefab: {fileID: 6179151408747186594, guid: e6344c6f728caf943bbbcf6283f5d643,
+      type: 3}
+    _singletonType:
+      _assemblyQualifiedName: UIGlobalCanvas, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    _bootScenePath: 
+    _bootMode: 1
+  - _prefab: {fileID: 7905426657074839335, guid: e828b1a41c434bc4e94e2d4d0023a0f2,
+      type: 3}
+    _singletonType:
+      _assemblyQualifiedName: StageManager, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    _bootScenePath: 
+    _bootMode: 1

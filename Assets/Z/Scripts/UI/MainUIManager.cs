@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,19 +14,17 @@ namespace Zio
         GameScene,
         
     }
-    public struct SceneLoader {
-        public delegate void SceneLoadedHandler ( string sceneId );
-
+    public class SceneLoader {
         private readonly string sceneId;
-        public SceneLoadedHandler onSceneLoaded;
+        public Action<string> onSceneLoaded;
  
-        public SceneLoader ( string sceneId ) : this()
+        public SceneLoader ( string sceneId ) 
         {
             this.sceneId = sceneId;
             var asyncOp = SceneManager.LoadSceneAsync( sceneId ); 
             asyncOp.completed += OnSceneLoaded;
         }
- 
+        
         private void OnSceneLoaded ( AsyncOperation op )
         {
             onSceneLoaded?.Invoke( sceneId );
@@ -36,26 +35,33 @@ namespace Zio
     
     public class MainUIManager : MonoBehaviour
     {
-        public GameObject loadingPanel;
-        private void Awake()
+
+        public void LoadGameScene(string stage)
         {
-            DontDestroyOnLoad(transform.gameObject);
+            int.TryParse(stage, out var stagedata);
+            EventManager.TriggerEvent(On.LoadStageData, stagedata);
+            
+            EventManager.TriggerEvent(On.LoadScene, "Default");
+            
+ 
+        }
+        public void LoadScene(string value)
+        {
+            var loader = new SceneLoader( value );
         }
 
-        public void LoadGameScene()
+        private void SetLoadingOff(string sceneId)
         {
-            
-            var loader = new SceneLoader( "Default" );
-            loader.onSceneLoaded += SetLoadingOff;
-            //StartCoroutine(AsyncSceneLoader("default"));
+            EventManager.TriggerEvent(On.HideScreenTransition, null);
+
         }
 
-        private void SetLoadingOff(string sceneid)
+        public void ApplicationQuit()
         {
-            Debug.Log(sceneid);
-            loadingPanel.SetActive(false);
-            
+            Application.Quit();
         }
+        
+
 
         
     }

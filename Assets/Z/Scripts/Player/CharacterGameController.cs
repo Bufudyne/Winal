@@ -51,7 +51,7 @@ public class CharacterGameController : MonoBehaviour, ICharacterController
     {
         // Handle initial state
         //TransitionToState(CharacterState.Default);
-        TransitionToState(CharacterState.Default);
+        TransitionToState(CharacterState.Intro);
 
         // Assign the characterController to the motor
         motor.CharacterController = this;
@@ -61,16 +61,32 @@ public class CharacterGameController : MonoBehaviour, ICharacterController
     private void OnEnable()
     {
         EventManager.StartListening(On.TookDamage, OnTookDamage);
+        EventManager.StartListening(On.StageComplete, OnStageComplete);
+        EventManager.StartListening(On.StartGame, OnStartGame);
+    }
+
+    
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(On.TookDamage, OnTookDamage);
+        EventManager.StopListening(On.StageComplete, OnStageComplete);
+        EventManager.StopListening(On.StartGame, OnStartGame);
+    }
+
+    private void OnStageComplete()
+    {
+        CurrentCharacterState = CharacterState.Intro;
+    }
+
+    private void OnStartGame()
+    {
+        CurrentCharacterState = CharacterState.Default;
     }
 
     private void OnTookDamage()
     {
         CurrentCharacterState = CharacterState.Intro;
-    }
-
-    private void OnDisable()
-    {
-        EventManager.StopListening(On.TookDamage, OnTookDamage);
     }
 
     /// <summary>

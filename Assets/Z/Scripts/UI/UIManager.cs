@@ -36,37 +36,37 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        EventManager.TriggerEvent(On.StartGame, null);
+        EventManager.TriggerEvent(On.LoadStage, null);
     }
 
     private void OnEnable()
     {
         EventManager.StartListening(On.LoadStage, OnLoadStage);
+        EventManager.StartListening(On.TimerRanOut, OnTimerRanOut);
         EventManager.StartListening(On.PointObtained, OnPointObtained);
         EventManager.StartListening(On.PointTimedOut, OnPointTimedOut);
-        EventManager.StartListening(On.TookDamage, OnTookDamage);
+        
     }
 
     private void OnDisable()
     {
         EventManager.StopListening(On.LoadStage, OnLoadStage);
+        EventManager.StartListening(On.TimerRanOut, OnTimerRanOut);
         EventManager.StopListening(On.PointObtained, OnPointObtained);
         EventManager.StopListening(On.PointTimedOut, OnPointTimedOut);
-        EventManager.StopListening(On.TookDamage, OnTookDamage);
+        
     }
 
-    private void OnTookDamage()
+    private void OnTimerRanOut()
     {
-        _buttonRetry.SetActive(true);
-    }
-
-    public void OnClickButtonRetry()
-    {
-        EventManager.Reset();
-        EventManager.Instance.aReset();
-        
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (_currentScore < StageManager.Instance.currentStage.star1Score)
+        {
+            EventManager.TriggerEvent(On.TookDamage, null);
+        }
+        else
+        {
+            EventManager.TriggerEvent(On.StageComplete, _currentScore);
+        }
     }
 
     private void OnPointTimedOut()
@@ -81,7 +81,11 @@ public class UIManager : MonoBehaviour
         if (_scoreMultiplier < 4)
             _scoreMultiplier++;
         comboStrBuilder.Clear();
-        comboStrBuilder.Append($"COMBO x{_scoreMultiplier}");
+        if(_scoreMultiplier <4)
+            comboStrBuilder.Append($"COMBO x{_scoreMultiplier}");
+        else
+            comboStrBuilder.Append($"COMBO x MAX");
+        
         _comboTextValue.text = comboStrBuilder.ToString();
         if(!_comboTextPanel.activeSelf) ShowComboText(true);
         _currentScore += (pointPerTile * _scoreMultiplier);
@@ -89,6 +93,10 @@ public class UIManager : MonoBehaviour
         IncreaseIntensity();
         if (_scoreMultiplier <= 4)
             _comboRectTransform.DOPunchScale(new Vector3(x: 0.5f, y: 0.5f, z: 0.5f), 0.3f, 1, 0.20f).SetLoops(1).SetEase(Ease.InOutBounce);
+        if (_currentScore > 100)
+        {
+            EventManager.TriggerEvent(On.StageComplete, _currentScore);
+        }
         
     }
 
@@ -101,6 +109,11 @@ public class UIManager : MonoBehaviour
     {
         getReadyAnimation.gameObject.SetActive(true);
         getReadyAnimation.DOPlay();
+    }
+
+    public void OnLoadingAnimationComplete()
+    {
+        EventManager.TriggerEvent(On.StartGame, StageManager.Instance.currentStage);
     }
     
     

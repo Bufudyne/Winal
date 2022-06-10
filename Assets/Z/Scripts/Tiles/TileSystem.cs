@@ -7,11 +7,14 @@ using Random = UnityEngine.Random;
 
 public class TileSystem : MonoBehaviour
 {
+    [SerializeField] private Animator TileAnimator;
     public List<Tile> tileList = new();
     private  Tile[,] _tiles = new Tile[10, 10];
 
     private WaitForSeconds _randomWait = new WaitForSeconds(1f);
     private float _seconds;
+    private static readonly int StartGame = Animator.StringToHash("StartGame");
+    private bool shouldLoop = true;
 
     private IEnumerator Start()
     {
@@ -24,16 +27,38 @@ public class TileSystem : MonoBehaviour
             if (y != 10) continue;
             y = 0;
             x++;
-            
         }
+        
+    }
+
+    private void OnEnable()
+    {
+        EventManager.StartListening(On.StartGame, OnStartGame);
+        EventManager.StartListening(On.StageComplete, OnStageComplete);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(On.StartGame, OnStartGame);
+        EventManager.StartListening(On.StageComplete, OnStageComplete);
+    }
+
+    private void OnStageComplete()
+    {
+        shouldLoop = false;
+    }
+
+    private void OnStartGame()
+    {
         _tiles[4, 4].ChangeType(TileType.IsSafe);
         _tiles[5, 4].ChangeType(TileType.IsSafe);
         _tiles[4, 5].ChangeType(TileType.IsSafe);
         _tiles[5, 5].ChangeType(TileType.IsSafe);
         StartCoroutine( CreateRandomPoints());
+        var stage = (StageData)On.StartGame.GetMessage();
+        TileAnimator.runtimeAnimatorController = stage.stagePattern;
+        TileAnimator.SetBool(StartGame, true);
     }
-
-
 
     private IEnumerator CreateRandomPoints()
     {
@@ -43,7 +68,8 @@ public class TileSystem : MonoBehaviour
         _tiles[h, v].ChangeType(TileType.IsPoint);
         EventManager.TriggerEvent(On.SpawnedPoint,_tiles[h, v].gameObject);
         yield return _randomWait;
-        StartCoroutine(CreateRandomPoints());
+        if(shouldLoop)
+            StartCoroutine(CreateRandomPoints());
     }
 
     private void UpdateColorAnimationEvent()

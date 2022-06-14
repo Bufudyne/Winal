@@ -31,7 +31,6 @@ public class UILoadingPanel : MonoBehaviour
         if (scene == "MainMenu")
         {
             EventManager.Instance.Reset();
-            OnEnable();
         }
 
         loader.onSceneLoaded += OnLoadingSceneComplete ;

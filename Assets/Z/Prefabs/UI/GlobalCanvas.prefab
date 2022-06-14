@@ -595,3 +595,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cecc1d4ecad10a4b9ede2e2fa935b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingPanel: {fileID: 5173290775847075082}
